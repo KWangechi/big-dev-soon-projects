@@ -12,6 +12,37 @@
       <div class="screen">
         <input type="text" placeholder="0" />
       </div>
+      <div class="calculator-container">
+        <div class="row">
+          <button type="button">AC</button>
+          <button type="button">C</button>
+          <button type="button">%</button>
+          <button type="button">/</button>
+        </div>
+        <div class="row">
+          <button type="button">7</button>
+          <button type="button">8</button>
+          <button type="button">9</button>
+          <button type="button">X</button>
+        </div>
+        <div class="row">
+          <button type="button">4</button>
+          <button type="button">5</button>
+          <button type="button">6</button>
+          <button type="button">-</button>
+        </div>
+        <div class="row">
+          <button type="button">1</button>
+          <button type="button">2</button>
+          <button type="button">3</button>
+          <button type="button">+</button>
+        </div>
+        <div class="row">
+          <button type="button" class="zero">0</button>
+          <button type="button">.</button>
+          <button type="button">=</button>
+        </div>
+      </div>
     </div>
   </q-page>
 </template>
@@ -26,25 +57,25 @@ export default defineComponent({
 
 <style scoped>
 .card {
-  width: 400px;
+  display: block;
+  width: 300px;
   height: 350px;
-  border-radius: 10px;
+  border-radius: 15px;
   background-color: white;
   margin: auto;
-  display: grid;
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  margin-top: 20px;
+  padding-top: 20px;
   height: max-content;
 }
 
 .tools {
   margin: 0 15px;
   height: max-content;
+  margin-top: 30p;
 }
 .icon {
   margin-left: 10px;
@@ -52,7 +83,6 @@ export default defineComponent({
 
 .screen {
   display: flex;
-  margin-top: -150px;
   margin-right: 20px;
   align-items: flex-start;
   justify-content: space-between;
@@ -64,5 +94,30 @@ input {
   border: none;
   font-size: 30px;
   max-width: 100%;
+}
+
+.calculator-container {
+  display: grid;
+  background-color: white;
+  border-radius: 10px;
+  min-height: 246px;
+  margin-top: 10px;
+}
+button {
+  width: 45px;
+  height: 30px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.zero {
+  width: 120px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding: 0 10px;
 }
 </style>
