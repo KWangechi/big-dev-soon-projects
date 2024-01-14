@@ -14,10 +14,10 @@
       </div>
       <div class="calculator-container">
         <div class="row">
-          <button type="button">AC</button>
-          <button type="button">C</button>
-          <button type="button">%</button>
-          <button type="button">/</button>
+          <button type="button" style="color: aqua;">AC</button>
+          <button type="button" style="color: aqua;">C</button>
+          <button type="button" style="color: red;">%</button>
+          <button type="button" >/</button>
         </div>
         <div class="row">
           <button type="button">7</button>
@@ -40,7 +40,7 @@
         <div class="row">
           <button type="button" class="zero">0</button>
           <button type="button">.</button>
-          <button type="button">=</button>
+          <button type="button" style="background-color: red; color: white;">=</button>
         </div>
       </div>
     </div>
@@ -104,10 +104,12 @@ input {
   margin-top: 10px;
 }
 button {
-  width: 45px;
+  width: 60px;
   height: 30px;
   background-color: white;
   border-radius: 5px;
+  font-size: 20px;
+
 }
 
 .zero {
@@ -119,5 +121,6 @@ button {
   justify-content: space-between;
   margin-top: 10px;
   padding: 0 10px;
+  /* text-align: center; */
 }
 </style>
