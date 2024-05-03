@@ -17,31 +17,36 @@
       <div class="screen">
         <input type="text" placeholder="0" v-model="calcInput" />
       </div>
+      <div class="screen">
+        <input type="text" placeholder="0" v-model="calcInput" />
+      </div>
       <q-separator></q-separator>
       <div class="calculator-container">
         <div class="row">
           <q-btn class="text-blue-4" rounded>AC</q-btn>
-          <q-btn class="text-blue-4" style="color: aqua">C</q-btn>
-          <q-btn class="text-blue-4" style="color: aqua">%</q-btn>
-          <q-btn class="text-red-4">/</q-btn>
+          <q-btn class="text-blue-4" style="color: aqua" @click="clearInput">C</q-btn>
+          <q-btn class="text-blue-4" style="color: aqua" @click="(e) => setSign(e)"
+            >%</q-btn
+          >
+          <q-btn class="text-red-4" @click="(e) => setSign(e)">/</q-btn>
         </div>
         <div class="row">
           <q-btn type="button">7</q-btn>
           <q-btn type="button">8</q-btn>
           <q-btn type="button">9</q-btn>
-          <q-btn type="button" class="text-red-4">X</q-btn>
+          <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">X</q-btn>
         </div>
         <div class="row">
           <q-btn type="button">4</q-btn>
           <q-btn type="button">5</q-btn>
           <q-btn type="button">6</q-btn>
-          <q-btn type="button" class="text-red-4">-</q-btn>
+          <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">-</q-btn>
         </div>
         <div class="row">
           <q-btn type="button" @click="clickOne">1</q-btn>
           <q-btn type="button">2</q-btn>
           <q-btn type="button">3</q-btn>
-          <q-btn type="button" class="text-red-4">+</q-btn>
+          <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">+</q-btn>
         </div>
         <div class="row q-mb-md">
           <q-btn type="button" class="zero">0</q-btn>
@@ -50,16 +55,6 @@
             >=</q-btn
           >
         </div>
-        <!-- <div class="row">
-          <q-btn type="button" class="zero">0</q-btn>
-          <q-btn type="button">.</q-btn>
-          <q-btn type="button" class="text-center bg-red-3 align-center">=</q-btn>
-        </div>
-        <div class="row">
-          <q-btn type="button" class="zero">0</q-btn>
-          <q-btn type="button">.</q-btn>
-          <q-btn type="button" class="text-center bg-red-3 align-center">=</q-btn>
-        </div> -->
       </div>
     </q-card>
   </q-page>
@@ -71,19 +66,27 @@ import { ref, watchEffect } from "vue";
 const lightMode = ref(false);
 const calcInput = ref(null);
 let sum = ref(0);
+let signSelected = ref("");
 
 function clickOne() {
-  calcInput.value += 1;
+  calcInput.value = 1;
 }
 
+function setSign(e) {
+  signSelected.value = e.target.innerText;
+
+  console.log(e.target.innerText);
+  // calcInput.value = "-";
+}
 function getSum() {
-  sum.value += calcInput.value;
+  sum.value = calcInput.value;
 
   // console.log(calcInput.value + calcInput.value);
 }
 
 function clearInput() {
   sum.value = 0;
+  calcInput.value = 0;
 }
 watchEffect(() => {
   console.log(calcInput.value);
@@ -133,6 +136,7 @@ watchEffect(() => {
   align-items: flex-start;
   justify-content: space-between;
   direction: rtl;
+  margin-top: 35px;
 }
 
 input {
@@ -166,4 +170,10 @@ button {
   margin-top: 10px;
   padding: 0 10px;
 }
+
+@media screen and (min-width: 100px) and (max-width: 850px) {
+  .card {
+    width: 80%;
+  }
+} ;
 </style>
