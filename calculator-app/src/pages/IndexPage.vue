@@ -1,82 +1,128 @@
 <template>
-  <q-page class="container text-center">
-    <h5 class="q-mt-xl">Quasar Calculator App</h5>
-    <div class="card">
+  <q-page class="text-center">
+    <h5 class="q-mt-sm">Quasar Calculator App</h5>
+    <q-card class="card">
       <div class="navbar">
-        <p class="calc-text q-mx-lg">Calc</p>
+        <span class="calc-text q-ml-sm text-bold">Calc</span>
         <div class="tools">
-          <q-icon name="dark_mode" size="1.3rem" class="icon"></q-icon>
-          <q-icon name="light_mode" size="1.3rem" class="icon"></q-icon>
+          <q-toggle
+            v-model="lightMode"
+            size="2.5rem"
+            :icon="!lightMode ? 'light_mode' : 'dark_mode'"
+            @click="$q.dark.toggle()"
+            color="black"
+          ></q-toggle>
         </div>
       </div>
       <div class="screen">
-        <input type="text" placeholder="0" />
+        <input type="text" placeholder="0" v-model="calcInput" />
       </div>
+      <q-separator></q-separator>
       <div class="calculator-container">
         <div class="row">
-          <button type="button" style="color: aqua;">AC</button>
-          <button type="button" style="color: aqua;">C</button>
-          <button type="button" style="color: red;">%</button>
-          <button type="button" >/</button>
+          <q-btn class="text-blue-4" rounded>AC</q-btn>
+          <q-btn class="text-blue-4" style="color: aqua">C</q-btn>
+          <q-btn class="text-blue-4" style="color: aqua">%</q-btn>
+          <q-btn class="text-red-4">/</q-btn>
         </div>
         <div class="row">
-          <button type="button">7</button>
-          <button type="button">8</button>
-          <button type="button">9</button>
-          <button type="button">X</button>
+          <q-btn type="button">7</q-btn>
+          <q-btn type="button">8</q-btn>
+          <q-btn type="button">9</q-btn>
+          <q-btn type="button" class="text-red-4">X</q-btn>
         </div>
         <div class="row">
-          <button type="button">4</button>
-          <button type="button">5</button>
-          <button type="button">6</button>
-          <button type="button">-</button>
+          <q-btn type="button">4</q-btn>
+          <q-btn type="button">5</q-btn>
+          <q-btn type="button">6</q-btn>
+          <q-btn type="button" class="text-red-4">-</q-btn>
         </div>
         <div class="row">
-          <button type="button">1</button>
-          <button type="button">2</button>
-          <button type="button">3</button>
-          <button type="button">+</button>
+          <q-btn type="button" @click="clickOne">1</q-btn>
+          <q-btn type="button">2</q-btn>
+          <q-btn type="button">3</q-btn>
+          <q-btn type="button" class="text-red-4">+</q-btn>
+        </div>
+        <div class="row q-mb-md">
+          <q-btn type="button" class="zero">0</q-btn>
+          <q-btn type="button">.</q-btn>
+          <q-btn type="button" class="text-center bg-red-3 align-center" @click="getSum"
+            >=</q-btn
+          >
+        </div>
+        <!-- <div class="row">
+          <q-btn type="button" class="zero">0</q-btn>
+          <q-btn type="button">.</q-btn>
+          <q-btn type="button" class="text-center bg-red-3 align-center">=</q-btn>
         </div>
         <div class="row">
-          <button type="button" class="zero">0</button>
-          <button type="button">.</button>
-          <button type="button" style="background-color: red; color: white;">=</button>
-        </div>
+          <q-btn type="button" class="zero">0</q-btn>
+          <q-btn type="button">.</q-btn>
+          <q-btn type="button" class="text-center bg-red-3 align-center">=</q-btn>
+        </div> -->
       </div>
-    </div>
+    </q-card>
   </q-page>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref, watchEffect } from "vue";
 
-export default defineComponent({
-  name: "IndexPage",
+const lightMode = ref(false);
+const calcInput = ref(null);
+let sum = ref(0);
+
+function clickOne() {
+  calcInput.value += 1;
+}
+
+function getSum() {
+  sum.value += calcInput.value;
+
+  // console.log(calcInput.value + calcInput.value);
+}
+
+function clearInput() {
+  sum.value = 0;
+}
+watchEffect(() => {
+  console.log(calcInput.value);
 });
 </script>
 
 <style scoped>
+/* main {
+  background-color: black;
+} */
 .card {
   display: block;
-  width: 300px;
-  height: 350px;
+  width: 25%;
   border-radius: 15px;
   background-color: white;
   margin: auto;
 }
 
-.navbar {
+/* .navbar {
   display: flex;
   justify-content: space-between;
   padding-top: 20px;
-  height: max-content;
 }
 
-.tools {
-  margin: 0 15px;
-  height: max-content;
-  margin-top: 30p;
+.navbar > .tools {
+  display: flex;
+  justify-content: flex-end;
+} */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.calc-text {
+  margin-left: 1rem; /* Adjust margin as needed */
+}
+
 .icon {
   margin-left: 10px;
 }
@@ -86,7 +132,6 @@ export default defineComponent({
   margin-right: 20px;
   align-items: flex-start;
   justify-content: space-between;
-  height: max-content;
   direction: rtl;
 }
 
@@ -100,20 +145,19 @@ input {
   display: grid;
   background-color: white;
   border-radius: 10px;
-  min-height: 246px;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
+
 button {
   width: 60px;
-  height: 30px;
+  height: 10px;
   background-color: white;
   border-radius: 5px;
   font-size: 20px;
-
 }
 
 .zero {
-  width: 120px;
+  width: 45%;
 }
 
 .row {
@@ -121,6 +165,5 @@ button {
   justify-content: space-between;
   margin-top: 10px;
   padding: 0 10px;
-  /* text-align: center; */
 }
 </style>
