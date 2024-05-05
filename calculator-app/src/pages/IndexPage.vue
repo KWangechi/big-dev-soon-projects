@@ -14,11 +14,11 @@
           ></q-toggle>
         </div>
       </div>
-      <div class="screen">
-        <input type="text" placeholder="0" v-model="calcInput" />
+      <div class="screen-2" v-if="previousInput != ''">
+        <input type="text" placeholder="0" v-model="previousInput" />
       </div>
       <div class="screen">
-        <input type="text" placeholder="0" v-model="calcInput" />
+        <input type="text" placeholder="0" v-model="oldValue" />
       </div>
       <q-separator></q-separator>
       <div class="calculator-container">
@@ -34,7 +34,7 @@
           <q-btn type="button">7</q-btn>
           <q-btn type="button">8</q-btn>
           <q-btn type="button">9</q-btn>
-          <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">X</q-btn>
+          <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">*</q-btn>
         </div>
         <div class="row">
           <q-btn type="button">4</q-btn>
@@ -44,8 +44,8 @@
         </div>
         <div class="row">
           <q-btn type="button" @click="clickOne">1</q-btn>
-          <q-btn type="button">2</q-btn>
-          <q-btn type="button">3</q-btn>
+          <q-btn type="button" @click="clickTwo">2</q-btn>
+          <q-btn type="button" @click="clickThree">3</q-btn>
           <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">+</q-btn>
         </div>
         <div class="row q-mb-md">
@@ -64,32 +64,105 @@
 import { ref, watchEffect } from "vue";
 
 const lightMode = ref(false);
-const calcInput = ref(null);
+const oldValue = ref(null);
+// const oldValue = ref(null);
+const newValue = ref(null);
+
 let sum = ref(0);
 let signSelected = ref("");
+const previousInput = ref("");
 
 function clickOne() {
-  calcInput.value = 1;
+  oldValue.value = 1;
+
+  console.log(oldValue.value);
 }
+
+function clickTwo() {
+  oldValue.value = 2;
+
+  console.log(oldValue.value);
+}
+function clickThree() {
+  oldValue.value = 3;
+
+  console.log(oldValue.value);
+}
+function clickFour() {
+  oldValue.value = 4;
+
+  console.log(oldValue.value);
+}
+function clickFive() {
+  oldValue.value = 5;
+
+  console.log(oldValue.value);
+}
+function clickSix() {
+  oldValue.value = 6;
+
+  console.log(oldValue.value);
+}
+function clickSeven() {
+  oldValue.value = 7;
+
+  console.log(oldValue.value);
+}
+function clickEight() {
+  oldValue.value = 8;
+
+  console.log(oldValue.value);
+}
+function clickNine() {
+  oldValue.value = 9;
+
+  console.log(oldValue.value);
+}
+// function clickOne() {
+//   oldValue.value = 1;
+
+//   console.log(oldValue.value);
+// }
+// function clickOne() {
+//   oldValue.value = 1;
+
+//   console.log(oldValue.value);
+// }
+// function clickOne() {
+//   oldValue.value = 1;
+
+//   console.log(oldValue.value);
+// }
+// function clickOne() {
+//   oldValue.value = 1;
+
+//   console.log(oldValue.value);
+// }
 
 function setSign(e) {
   signSelected.value = e.target.innerText;
 
+  previousInput.value = oldValue.value + signSelected.value || newValue.value;
+
+  newValue.value = oldValue.value;
   console.log(e.target.innerText);
   // calcInput.value = "-";
 }
 function getSum() {
-  sum.value = calcInput.value;
+  console.log(oldValue.value);
 
-  // console.log(calcInput.value + calcInput.value);
+  oldValue.value += newValue.value;
+
+  console.log(oldValue.value);
 }
 
 function clearInput() {
   sum.value = 0;
-  calcInput.value = 0;
+  oldValue.value = 0;
+  previousInput.value = 0;
 }
 watchEffect(() => {
-  console.log(calcInput.value);
+  // console.log(calcInput.value);
 });
 </script>
 
@@ -104,17 +177,6 @@ watchEffect(() => {
   background-color: white;
   margin: auto;
 }
-
-/* .navbar {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 20px;
-}
-
-.navbar > .tools {
-  display: flex;
-  justify-content: flex-end;
-} */
 
 .navbar {
   display: flex;
@@ -132,17 +194,31 @@ watchEffect(() => {
 
 .screen {
   display: flex;
+  flex-direction: row;
   margin-right: 20px;
-  align-items: flex-start;
-  justify-content: space-between;
-  direction: rtl;
-  margin-top: 35px;
+  justify-content: end;
+  margin-top: 20px;
 }
 
 input {
   border: none;
   font-size: 30px;
   max-width: 100%;
+  text-align: right;
+}
+
+.screen-2 {
+  margin-top: 20px;
+  margin-right: 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.screen-2 input {
+  color: grey;
+  text-align: right;
+
+  font-size: 25px;
 }
 
 .calculator-container {
