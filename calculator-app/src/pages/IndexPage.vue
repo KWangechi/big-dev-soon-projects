@@ -25,8 +25,8 @@
         <div class="row">
           <q-btn class="text-blue-4" rounded @click="clearInput">AC</q-btn>
           <q-btn class="text-blue-4" style="color: aqua" @click="clearPreviousInput"
-            >C</q-btn
-          >
+            ><q-icon name="backspace" size="1.5rem"></q-icon
+          ></q-btn>
           <q-btn class="text-blue-4" style="color: aqua" @click="(e) => setSign(e)"
             >%</q-btn
           >
@@ -117,6 +117,7 @@ function setSign(e) {
 }
 
 function calculateFunctions() {
+  previousInput.value = previousInput.value + " " + currentValue.value;
   switch (signSelected.value) {
     case "+":
       getSum();
@@ -130,10 +131,6 @@ function calculateFunctions() {
     case "/":
       getQuotient();
       break;
-    // case "%":
-    //   currentValue.value = parseInt(currentValue.value) / 100;
-    //   // getPercentage();
-    //   break;
     default:
       break;
   }
@@ -247,7 +244,7 @@ function clearPreviousInput() {
   flex-direction: row;
   margin-right: 20px;
   justify-content: end;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 input {
