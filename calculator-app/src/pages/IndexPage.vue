@@ -208,12 +208,14 @@ function getQuotient() {
 // function getPercentage() {}
 
 function clearInput() {
+  document.getElementById("input").style.color = "black";
+
   sum.value = 0;
   oldValue.value = 0;
   previousInput.value = 0;
   currentValue.value = null;
 
-  console.log(currentValue.value);
+  // console.log(currentValue.value);
 }
 
 function clearPreviousInput() {
