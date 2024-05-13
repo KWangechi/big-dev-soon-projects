@@ -51,9 +51,12 @@
           <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">+</q-btn>
         </div>
         <div class="row q-mb-md">
-          <q-btn type="button" class="zero">0</q-btn>
+          <q-btn type="button" @click="(e) => clickNumber(e)" class="zero">0</q-btn>
           <q-btn type="button">.</q-btn>
-          <q-btn type="button" class="text-center bg-red-3 align-center" @click="getSum"
+          <q-btn
+            type="button"
+            class="text-center bg-red-3 align-center"
+            @click="calculateFunctions"
             >=</q-btn
           >
         </div>
@@ -73,7 +76,6 @@ const currentValue = ref(null);
 let sum = ref(0);
 let signSelected = ref("");
 const previousInput = ref("");
-// const numArray = ref([]);
 
 /**
  * Generic function to get the number clicked(applicable to the number functions)
@@ -86,51 +88,113 @@ function clickNumber(e) {
       : currentValue.value.toString() + e.target.innerText.toString();
 
   console.log("Current Value: " + currentValue.value);
-  // numArray.value.push(e.target.innerText);
-
-  // console.log(numArray.value);
-
-  // should be like a watch thing which tracks what you've clicked
-  // newValue.value = e.target.innerText;
-
-  // oldValue.value = newValue.value;
-
-  // console.log(oldValue.value);
-
-  // put the numbers in an array
-
-  // newValue.value =
-  //   newValue.value !== null
-  //     ? newValue.value?.toString() + e.target.innerText?.toString()
-  //     : e.target.innerText?.toString();
-
-  // console.log(parseInt(newValue.value));
 }
 
+/**
+ * Set the airthmetic symbol i.e +,-,/,* and %
+ */
 function setSign(e) {
+  console.log(typeof currentValue.value);
+
+  // when a sign is selected, set the currentValue to 0 and then get the currentValue
   signSelected.value = e.target.innerText;
+  oldValue.value = parseInt(currentValue.value);
 
-  previousInput.value = oldValue.value + signSelected.value || newValue.value;
+  previousInput.value =
+    oldValue.value.toString() + " " + signSelected.value || currentValue.value;
 
-  newValue.value = oldValue.value;
-  console.log(e.target.innerText);
+  currentValue.value = null;
 }
 
-function calculateFunctions() {}
+function calculateFunctions() {
+  console.log(oldValue.value);
+  console.log(currentValue.value);
+
+  switch (signSelected.value) {
+    case "+":
+      getSum();
+      break;
+    case "-":
+      getDifference();
+      break;
+    case "*":
+      getProduct();
+      break;
+    case "/":
+      getQuotient();
+      break;
+    // case "%":
+    //   currentValue.value = parseInt(currentValue.value) / 100;
+    //   // getPercentage();
+    //   break;
+    default:
+      break;
+  }
+
+  console.log(currentValue.value);
+}
+
+/**
+ * Calculate sum
+ */
 
 function getSum() {
-  console.log(oldValue.value);
+  oldValue.value += parseInt(currentValue.value);
+  sum.value = oldValue.value;
 
-  oldValue.value += newValue.value;
+  currentValue.value = sum.value;
 
-  console.log(oldValue.value);
+  console.log(sum.value);
 }
+
+/**
+ * Calculate the difference
+ */
+
+function getDifference() {
+  oldValue.value -= parseInt(currentValue.value);
+  sum.value = oldValue.value;
+
+  currentValue.value = sum.value;
+
+  console.log(sum.value);
+}
+
+/**
+ * Calculate Product
+ */
+
+function getProduct() {
+  oldValue.value *= parseInt(currentValue.value);
+  sum.value = oldValue.value;
+
+  currentValue.value = sum.value;
+
+  console.log(sum.value);
+}
+
+/**
+ * Calculate the division
+ */
+function getQuotient() {
+  oldValue.value /= parseInt(currentValue.value);
+  sum.value = oldValue.value;
+
+  currentValue.value = sum.value;
+
+  console.log(sum.value);
+}
+
+/**
+ * Calculate the percentage
+ */
+function getPercentage() {}
 
 function clearInput() {
   sum.value = 0;
   oldValue.value = 0;
   previousInput.value = 0;
-  currentValue.value = 0;
+  currentValue.value = null;
 
   console.log(currentValue.value);
 }
