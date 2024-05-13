@@ -66,11 +66,10 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
 
 const lightMode = ref(false);
 const oldValue = ref(null);
-const newValue = ref(null);
 const currentValue = ref(null);
 
 let sum = ref(0);
@@ -98,7 +97,18 @@ function setSign(e) {
 
   // when a sign is selected, set the currentValue to 0 and then get the currentValue
   signSelected.value = e.target.innerText;
-  oldValue.value = parseInt(currentValue.value);
+
+  if (signSelected.value == "%") {
+    // get percentage of the number
+    currentValue.value = (parseFloat(currentValue.value) / 100).toString();
+
+    return;
+  }
+
+  // console.log("When percentage is clicked: " + currentValue.value);
+
+  oldValue.value = parseInt(currentValue.value) || parseFloat(currentValue.value);
+  // console.log(oldValue.value);
 
   previousInput.value =
     oldValue.value.toString() + " " + signSelected.value || currentValue.value;
@@ -107,9 +117,6 @@ function setSign(e) {
 }
 
 function calculateFunctions() {
-  console.log(oldValue.value);
-  console.log(currentValue.value);
-
   switch (signSelected.value) {
     case "+":
       getSum();
@@ -185,10 +192,10 @@ function getQuotient() {
   console.log(sum.value);
 }
 
-/**
- * Calculate the percentage
- */
-function getPercentage() {}
+// /**
+//  * Calculate the percentage
+//  */
+// function getPercentage() {}
 
 function clearInput() {
   sum.value = 0;
@@ -200,7 +207,10 @@ function clearInput() {
 }
 
 function clearPreviousInput() {
-  currentValue.value = currentValue.value.slice(0, currentValue.value.length - 1);
+  currentValue.value =
+    typeof currentValue.value == "string"
+      ? currentValue.value.slice(0, currentValue.value.length - 1)
+      : null;
 
   console.log(currentValue.value);
 }
