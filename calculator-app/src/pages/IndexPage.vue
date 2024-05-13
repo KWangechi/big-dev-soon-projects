@@ -18,34 +18,36 @@
         <input type="text" placeholder="0" v-model="previousInput" />
       </div>
       <div class="screen">
-        <input type="text" placeholder="0" v-model="oldValue" />
+        <input type="text" placeholder="0" v-model="currentValue" />
       </div>
       <q-separator></q-separator>
       <div class="calculator-container">
         <div class="row">
-          <q-btn class="text-blue-4" rounded>AC</q-btn>
-          <q-btn class="text-blue-4" style="color: aqua" @click="clearInput">C</q-btn>
+          <q-btn class="text-blue-4" rounded @click="clearInput">AC</q-btn>
+          <q-btn class="text-blue-4" style="color: aqua" @click="clearPreviousInput"
+            >C</q-btn
+          >
           <q-btn class="text-blue-4" style="color: aqua" @click="(e) => setSign(e)"
             >%</q-btn
           >
           <q-btn class="text-red-4" @click="(e) => setSign(e)">/</q-btn>
         </div>
         <div class="row">
-          <q-btn type="button">7</q-btn>
-          <q-btn type="button">8</q-btn>
-          <q-btn type="button">9</q-btn>
+          <q-btn type="button" @click="(e) => clickNumber(e)">7</q-btn>
+          <q-btn type="button" @click="(e) => clickNumber(e)">8</q-btn>
+          <q-btn type="button" @click="(e) => clickNumber(e)">9</q-btn>
           <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">*</q-btn>
         </div>
         <div class="row">
-          <q-btn type="button">4</q-btn>
-          <q-btn type="button">5</q-btn>
-          <q-btn type="button">6</q-btn>
+          <q-btn type="button" @click="(e) => clickNumber(e)">4</q-btn>
+          <q-btn type="button" @click="(e) => clickNumber(e)">5</q-btn>
+          <q-btn type="button" @click="(e) => clickNumber(e)">6</q-btn>
           <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">-</q-btn>
         </div>
         <div class="row">
-          <q-btn type="button" @click="clickOne">1</q-btn>
-          <q-btn type="button" @click="clickTwo">2</q-btn>
-          <q-btn type="button" @click="clickThree">3</q-btn>
+          <q-btn type="button" @click="(e) => clickNumber(e)">1</q-btn>
+          <q-btn type="button" @click="(e) => clickNumber(e)">2</q-btn>
+          <q-btn type="button" @click="(e) => clickNumber(e)">3</q-btn>
           <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">+</q-btn>
         </div>
         <div class="row q-mb-md">
@@ -65,79 +67,45 @@ import { ref, watchEffect } from "vue";
 
 const lightMode = ref(false);
 const oldValue = ref(null);
-// const oldValue = ref(null);
 const newValue = ref(null);
+const currentValue = ref(null);
 
 let sum = ref(0);
 let signSelected = ref("");
 const previousInput = ref("");
+// const numArray = ref([]);
 
-function clickOne() {
-  oldValue.value = 1;
+/**
+ * Generic function to get the number clicked(applicable to the number functions)
+ */
+function clickNumber(e) {
+  console.log(currentValue.value);
+  currentValue.value =
+    currentValue.value == null
+      ? e.target.innerText
+      : currentValue.value.toString() + e.target.innerText.toString();
 
-  console.log(oldValue.value);
+  console.log("Current Value: " + currentValue.value);
+  // numArray.value.push(e.target.innerText);
+
+  // console.log(numArray.value);
+
+  // should be like a watch thing which tracks what you've clicked
+  // newValue.value = e.target.innerText;
+
+  // oldValue.value = newValue.value;
+
+  // console.log(oldValue.value);
+
+  // put the numbers in an array
+
+  // newValue.value =
+  //   newValue.value !== null
+  //     ? newValue.value?.toString() + e.target.innerText?.toString()
+  //     : e.target.innerText?.toString();
+
+  // console.log(parseInt(newValue.value));
 }
-
-function clickTwo() {
-  oldValue.value = 2;
-
-  console.log(oldValue.value);
-}
-function clickThree() {
-  oldValue.value = 3;
-
-  console.log(oldValue.value);
-}
-function clickFour() {
-  oldValue.value = 4;
-
-  console.log(oldValue.value);
-}
-function clickFive() {
-  oldValue.value = 5;
-
-  console.log(oldValue.value);
-}
-function clickSix() {
-  oldValue.value = 6;
-
-  console.log(oldValue.value);
-}
-function clickSeven() {
-  oldValue.value = 7;
-
-  console.log(oldValue.value);
-}
-function clickEight() {
-  oldValue.value = 8;
-
-  console.log(oldValue.value);
-}
-function clickNine() {
-  oldValue.value = 9;
-
-  console.log(oldValue.value);
-}
-// function clickOne() {
-//   oldValue.value = 1;
-
-//   console.log(oldValue.value);
-// }
-// function clickOne() {
-//   oldValue.value = 1;
-
-//   console.log(oldValue.value);
-// }
-// function clickOne() {
-//   oldValue.value = 1;
-
-//   console.log(oldValue.value);
-// }
-// function clickOne() {
-//   oldValue.value = 1;
-
-//   console.log(oldValue.value);
-// }
 
 function setSign(e) {
   signSelected.value = e.target.innerText;
@@ -146,8 +114,10 @@ function setSign(e) {
 
   newValue.value = oldValue.value;
   console.log(e.target.innerText);
-  // calcInput.value = "-";
 }
+
+function calculateFunctions() {}
+
 function getSum() {
   console.log(oldValue.value);
 
@@ -160,10 +130,16 @@ function clearInput() {
   sum.value = 0;
   oldValue.value = 0;
   previousInput.value = 0;
+  currentValue.value = 0;
+
+  console.log(currentValue.value);
 }
-watchEffect(() => {
-  // console.log(calcInput.value);
-});
+
+function clearPreviousInput() {
+  currentValue.value = currentValue.value.slice(0, currentValue.value.length - 1);
+
+  console.log(currentValue.value);
+}
 </script>
 
 <style scoped>
@@ -251,5 +227,5 @@ button {
   .card {
     width: 80%;
   }
-} ;
+}
 </style>
