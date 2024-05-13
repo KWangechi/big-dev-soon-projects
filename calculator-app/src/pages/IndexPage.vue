@@ -18,7 +18,7 @@
         <input type="text" placeholder="0" v-model="previousInput" />
       </div>
       <div class="screen">
-        <input type="text" placeholder="0" v-model="currentValue" />
+        <input type="text" placeholder="0" v-model="currentValue" id="input" />
       </div>
       <q-separator></q-separator>
       <div class="calculator-container">
@@ -181,10 +181,23 @@ function getProduct() {
  * Calculate the division
  */
 function getQuotient() {
+  console.log(currentValue.value);
+
+  if (currentValue.value == 0) {
+    console.log("Cannot divide by 0");
+    console.log(document.getElementById("input").innerText);
+    currentValue.value = "Math Error!";
+    document.getElementById("input").style.color = "red";
+
+    return;
+  }
+
   oldValue.value /= parseInt(currentValue.value);
   sum.value = oldValue.value;
 
   currentValue.value = sum.value;
+
+  console.log(document.getElementById("input").innerText);
 
   console.log(sum.value);
 }
