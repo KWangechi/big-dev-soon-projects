@@ -1,68 +1,71 @@
 <template>
-  <q-page class="text-center">
-    <h5 class="q-mt-sm">Quasar Calculator App</h5>
-    <q-card class="card">
-      <div class="navbar">
-        <span class="calc-text q-ml-sm text-bold">Calc</span>
-        <div class="tools">
-          <q-toggle
-            v-model="lightMode"
-            size="2.5rem"
-            :icon="!lightMode ? 'light_mode' : 'dark_mode'"
-            @click="$q.dark.toggle()"
-            color="black"
-          ></q-toggle>
-        </div>
-      </div>
-      <div class="screen-2" v-if="previousInput != ''">
-        <input type="text" placeholder="0" v-model="previousInput" />
-      </div>
-      <div class="screen">
-        <input type="text" placeholder="0" v-model="currentValue" id="input" />
-      </div>
-      <q-separator></q-separator>
-      <div class="calculator-container">
-        <div class="row">
-          <q-btn class="text-blue-4" rounded @click="clearInput">AC</q-btn>
-          <q-btn class="text-blue-4" style="color: aqua" @click="clearPreviousInput"
-            ><q-icon name="backspace" size="1.5rem"></q-icon
-          ></q-btn>
-          <q-btn class="text-blue-4" style="color: aqua" @click="(e) => setSign(e)"
-            >%</q-btn
-          >
-          <q-btn class="text-red-4" @click="(e) => setSign(e)">/</q-btn>
-        </div>
-        <div class="row">
-          <q-btn type="button" @click="(e) => clickNumber(e)">7</q-btn>
-          <q-btn type="button" @click="(e) => clickNumber(e)">8</q-btn>
-          <q-btn type="button" @click="(e) => clickNumber(e)">9</q-btn>
-          <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">*</q-btn>
-        </div>
-        <div class="row">
-          <q-btn type="button" @click="(e) => clickNumber(e)">4</q-btn>
-          <q-btn type="button" @click="(e) => clickNumber(e)">5</q-btn>
-          <q-btn type="button" @click="(e) => clickNumber(e)">6</q-btn>
-          <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">-</q-btn>
-        </div>
-        <div class="row">
-          <q-btn type="button" @click="(e) => clickNumber(e)">1</q-btn>
-          <q-btn type="button" @click="(e) => clickNumber(e)">2</q-btn>
-          <q-btn type="button" @click="(e) => clickNumber(e)">3</q-btn>
-          <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">+</q-btn>
-        </div>
-        <div class="row q-mb-md">
-          <q-btn type="button" @click="(e) => clickNumber(e)" class="zero">0</q-btn>
-          <q-btn type="button">.</q-btn>
-          <q-btn
-            type="button"
-            class="text-center bg-red-3 align-center"
-            @click="calculateFunctions"
-            >=</q-btn
-          >
-        </div>
-      </div>
-    </q-card>
-  </q-page>
+  <q-layout :class="{ 'dark-mode': lightMode }">
+    <q-page-container
+      ><q-page class="text-center">
+        <h5 class="q-mt-xl">Quasar Calculator App</h5>
+        <q-card class="card">
+          <div class="navbar">
+            <span class="calc-text q-ml-sm text-bold">Calc</span>
+            <div class="tools">
+              <q-toggle
+                v-model="lightMode"
+                size="2.5rem"
+                :icon="!lightMode ? 'light_mode' : 'dark_mode'"
+                :color="lightMode ? 'black' : 'white'"
+              ></q-toggle>
+            </div>
+          </div>
+          <div class="screen-2" v-if="previousInput != ''">
+            <input type="text" placeholder="0" v-model="previousInput" />
+          </div>
+          <div class="screen">
+            <input type="text" placeholder="0" v-model="currentValue" id="input" />
+          </div>
+          <q-separator></q-separator>
+          <div class="calculator-container">
+            <div class="row">
+              <q-btn class="text-blue-4" rounded @click="clearInput">AC</q-btn>
+              <q-btn class="text-blue-4" style="color: aqua" @click="clearPreviousInput"
+                ><q-icon name="backspace" size="1.5rem"></q-icon
+              ></q-btn>
+              <q-btn class="text-blue-4" style="color: aqua" @click="(e) => setSign(e)"
+                >%</q-btn
+              >
+              <q-btn class="text-red-4" @click="(e) => setSign(e)">/</q-btn>
+            </div>
+            <div class="row">
+              <q-btn type="button" @click="(e) => clickNumber(e)">7</q-btn>
+              <q-btn type="button" @click="(e) => clickNumber(e)">8</q-btn>
+              <q-btn type="button" @click="(e) => clickNumber(e)">9</q-btn>
+              <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">*</q-btn>
+            </div>
+            <div class="row">
+              <q-btn type="button" @click="(e) => clickNumber(e)">4</q-btn>
+              <q-btn type="button" @click="(e) => clickNumber(e)">5</q-btn>
+              <q-btn type="button" @click="(e) => clickNumber(e)">6</q-btn>
+              <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">-</q-btn>
+            </div>
+            <div class="row">
+              <q-btn type="button" @click="(e) => clickNumber(e)">1</q-btn>
+              <q-btn type="button" @click="(e) => clickNumber(e)">2</q-btn>
+              <q-btn type="button" @click="(e) => clickNumber(e)">3</q-btn>
+              <q-btn type="button" class="text-red-4" @click="(e) => setSign(e)">+</q-btn>
+            </div>
+            <div class="row q-mb-md">
+              <q-btn type="button" @click="(e) => clickNumber(e)" class="zero">0</q-btn>
+              <q-btn type="button">.</q-btn>
+              <q-btn
+                type="button"
+                class="text-center bg-red-3 align-center"
+                @click="calculateFunctions"
+                >=</q-btn
+              >
+            </div>
+          </div>
+        </q-card>
+      </q-page></q-page-container
+    >
+  </q-layout>
 </template>
 
 <script setup>
@@ -76,6 +79,9 @@ let sum = ref(0);
 let signSelected = ref("");
 const previousInput = ref("");
 
+function toggleLightMode() {
+  // lightMode.value = !lightMode.value;
+}
 /**
  * Generic function to get the number clicked(applicable to the number functions)
  */
@@ -226,12 +232,19 @@ function clearPreviousInput() {
 
   console.log(currentValue.value);
 }
+
+/**
+ * Bind the keyboard keys to the screen buttons
+ */
+function keyBindings() {
+  document.addEventListener("click", () => {});
+}
 </script>
 
 <style scoped>
-/* main {
-  background-color: black;
-} */
+.q-page-container {
+  margin-top: -48px;
+}
 .card {
   display: block;
   width: 25%;
@@ -280,7 +293,7 @@ input {
   color: grey;
   text-align: right;
 
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .calculator-container {
@@ -288,6 +301,7 @@ input {
   background-color: white;
   border-radius: 10px;
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 button {
@@ -312,6 +326,48 @@ button {
 @media screen and (min-width: 100px) and (max-width: 850px) {
   .card {
     width: 80%;
+  }
+}
+
+/**
+Set the calculator to dark mode
+ */
+.dark-mode {
+  .card {
+    color: white;
+    background-color: rgb(31, 32, 41);
+  }
+  button {
+    background-color: rgb(31, 32, 41);
+    color: white;
+    box-shadow: 20px;
+    border: 1px white solid;
+  }
+  input {
+    color: white;
+  }
+  .calc-text {
+    color: white;
+  }
+  .calculator-container,
+  .screen {
+    background-color: rgb(43, 47, 55);
+  }
+
+  .screen input {
+    color: white;
+    background-color: rgb(31, 32, 41);
+  }
+
+  .screen-2 input {
+    color: rgb(255, 255, 255, 0.4);
+    background-color: rgb(31, 32, 41);
+  }
+  .q-page-container {
+    background-color: rgb(140, 159, 255);
+  }
+  h5 {
+    color: white;
   }
 }
 </style>
